@@ -204,9 +204,3 @@ preparation for DAG paths; they exclude input generation and result validation.
 Small-input times are noisy and can even decrease at a larger input after JVM
 compilation. Different processors, JVMs, garbage collection and background work
 change these times; reproducible operation counts are the main evidence.
-
-The repository preserves focused implementation/test commits on the five
-required feature branches, merges passing stages into `main`, and tags the
-release `v1.0`. The ZIP also contains a portable Git bundle. AI assistance is
-acknowledged in the README. Optional Tarjan/condensation bonuses are outside this
-submission's six-algorithm scope.

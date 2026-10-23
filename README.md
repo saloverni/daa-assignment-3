@@ -101,33 +101,3 @@ The reported counters are reproducible with this code/toolchain; times vary by
 hardware, JVM, garbage collection and load. Plotted “operations” means the sum of
 three operation counters, excluding stack depth. It is a work proxy, not a CPU
 instruction count, and excludes vertex-initialization overhead on edgeless graphs.
-
-## Git history and ZIP
-
-The implementation stages live in `feature/dsu`, `feature/mst`, `feature/scc`,
-`feature/paths`, and `feature/metrics`. Each contains focused commits; tested stages
-are merged into `main` with merge commits. No history flattening is used.
-
-```bash
-git log --graph --oneline --all --decorate
-git branch -a
-git show v1.0 --no-patch
-python3 scripts/package_release.py Name Surname Group
-```
-
-The last command creates `dist/DAA_Assignment3_Name_Surname_Group.zip`. Without
-arguments it uses `DAA_Assignment3_saloverni.zip`; replace this with your real name,
-surname and group before Moodle submission. The ZIP contains the tagged source,
-results, report, wrapper, and `git-history.bundle`, which preserves all six branches
-and the release tag even when the ZIP is viewed separately from GitHub. See the
-included `GIT_HISTORY.txt` for restoration commands. Moodle upload is manual.
-
-## AI-use acknowledgement
-
-OpenAI Codex assisted with implementation, test design, benchmark execution,
-plotting and documentation. Tests and benchmark were actually executed; CSV and
-plots are generated from the code. The student should review the algorithms and
-be prepared to explain the proofs, counter definitions and choices at the defense.
-
-Build references: [Gradle 9.1 release notes](https://docs.gradle.org/9.1.0/release-notes.html)
-and [JUnit 5.13.4 guide](https://docs.junit.org/current/user-guide/junit-user-guide-5.13.4.pdf).
