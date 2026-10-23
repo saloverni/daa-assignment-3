@@ -101,6 +101,16 @@ public final class Benchmark {
             Files.write(temporary, rows);
             Files.move(temporary, output, StandardCopyOption.REPLACE_EXISTING);
         } finally { Files.deleteIfExists(temporary); }
+        Files.writeString(output.toAbsolutePath().getParent().resolve("environment.txt"),
+                "Java: " + System.getProperty("java.version") + "\n"
+                + "VM: " + System.getProperty("java.vm.name") + "\n"
+                + "OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + "\n"
+                + "Available processors: " + Runtime.getRuntime().availableProcessors() + "\n"
+                + "Max heap bytes: " + Runtime.getRuntime().maxMemory() + "\n"
+                + "Runs per case: 5; reported time: median; no dedicated warm-up\n"
+                + "Generation and result validation excluded from timing; algorithm allocations included.\n"
+                + "DAG timing includes Kahn; DAG counters cover relaxation only.\n"
+                + "Kosaraju timing includes graph reversal; scans cover the two DFS passes.\n");
         System.out.println("All references and counters verified; wrote " + output);
     }
 }
