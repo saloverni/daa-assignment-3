@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories { mavenCentral() }
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(21) }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.13.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+    maxHeapSize = '1g'
+    testLogging { events 'failed', 'skipped' }
+}
+
+application { mainClass = 'benchmark.Main' }
+
+tasks.register('benchmark', JavaExec) {
+    group = 'verification'
+    description = 'Run all 50 benchmark cases, five times each, checking reference results.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'benchmark.Benchmark'
+    maxHeapSize = '2g'
+    args 'results/results.csv'
+}
+
+tasks.register('plots', Exec) {
+    group = 'reporting'
+    description = 'Generate the three report plots and measured analysis from results.csv.'
+    commandLine 'python3', 'scripts/plot_results.py'
+}
+
+tasks.register('reproduce') {
+    group = 'verification'
+    description = 'Run tests, benchmark and regenerate plots.'
+    dependsOn test, tasks.named('benchmark'), tasks.named('plots')
+}
+
+tasks.named('benchmark') { mustRunAfter test }
+tasks.named('plots') { mustRunAfter tasks.named('benchmark') }
