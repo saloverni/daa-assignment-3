@@ -23,6 +23,10 @@ test {
 
 application { mainClass = 'benchmark.Main' }
 
+tasks.withType(JavaExec).configureEach {
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+}
+
 tasks.register('benchmark', JavaExec) {
     group = 'verification'
     description = 'Run all 50 benchmark cases, five times each, checking reference results.'
